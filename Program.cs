@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using CommandLine;
 using SecretEngine;
@@ -17,43 +18,51 @@ namespace SECRET
 
         private static int RunEncrypt(EncryptOption option)
         {
-            Crypto cryptoEngine = new Crypto();
-            CryptoKey key;
-            bool isDir = false;
-            string pass = GetPassword();
-
-            Console.WriteLine();
-            Console.WriteLine("Encrypting....");
-
-            key = new CryptoKey(pass);
-
-            //This is the only way to determine are we running --file or --directory?
-            if (option.InputDirToEncrypt != null)
-                isDir = true;
-            
-            if(isDir)
+            try
             {
-                List<Tuple<bool, string>> files;
-                files = cryptoEngine.EncryptDirectory(option.InputDirToEncrypt, key, option.Recursive, option.Delete);
 
-                if (files.Count == 0)
-                {
-                    Console.WriteLine("No files found in " + option.InputDirToEncrypt + ".");
-                    return 0;
-                }
+                Crypto cryptoEngine = new Crypto();
+                CryptoKey key;
+                bool isDir = false;
+                string pass = GetPassword();
 
-                foreach (var t in files)
+                Console.WriteLine();
+                Console.WriteLine("Encrypting....");
+
+                key = new CryptoKey(pass);
+
+                //This is the only way to determine are we running --file or --directory?
+                if (option.InputDirToEncrypt != null)
+                    isDir = true;
+
+                if (isDir)
                 {
-                    if (t.Item1 == false)
+                    List<Tuple<bool, string>> files;
+                    files = cryptoEngine.EncryptDirectory(option.InputDirToEncrypt, key, option.Recursive, option.Delete);
+
+                    if (files.Count == 0)
                     {
-                        Console.WriteLine("Skipped file " + t.Item2 + ".");
+                        Console.WriteLine("No files found in " + option.InputDirToEncrypt + ".");
+                        return 0;
+                    }
+
+                    foreach (var t in files)
+                    {
+                        if (t.Item1 == false)
+                        {
+                            Console.WriteLine("Skipped file " + t.Item2 + ".");
+                        }
                     }
                 }
+                else
+                {
+                    if (!cryptoEngine.EncryptFile(option.InputFileToEncrypt, key, option.Delete))
+                        Console.WriteLine(cryptoEngine.LastErrorMessage);
+                }
             }
-            else
+            catch(Exception ex)
             {
-                if (!cryptoEngine.EncryptFile(option.InputFileToEncrypt, key, option.Delete))
-                    Console.WriteLine(cryptoEngine.LastErrorMessage);
+                Console.WriteLine(ex.Message);
             }
 
             return 0;
@@ -61,43 +70,50 @@ namespace SECRET
 
         private static int RunDecrypt(DecryptOption option)
         {
-            Crypto cryptoEngine = new Crypto();
-            CryptoKey key;
-            bool isDir = false;
-            string pass = GetPassword();
-
-            Console.WriteLine();
-            Console.WriteLine("Decrypting....");
-
-            key = new CryptoKey(pass);
-            //This is the only way to determine are we running --file or --directory?
-            if (option.InputDirToDecrypt != null)
-                isDir = true;
-
-            if (isDir)
+            try
             {
-                List<Tuple<bool, string>> files;
-                files = cryptoEngine.DecryptDirectory(option.InputDirToDecrypt, key, option.Recursive, option.Delete);
-                 
-                if(files.Count == 0)
-                {
-                    Console.WriteLine("No files found in " + option.InputDirToDecrypt + ".");
-                    return 0;
-                }
+                Crypto cryptoEngine = new Crypto();
+                CryptoKey key;
+                bool isDir = false;
+                string pass = GetPassword();
 
-                foreach(var t in files)
+                Console.WriteLine();
+                Console.WriteLine("Decrypting....");
+
+                key = new CryptoKey(pass);
+                //This is the only way to determine are we running --file or --directory?
+                if (option.InputDirToDecrypt != null)
+                    isDir = true;
+
+                if (isDir)
                 {
-                    if(t.Item1 == false)
+                    List<Tuple<bool, string>> files;
+                    files = cryptoEngine.DecryptDirectory(option.InputDirToDecrypt, key, option.Recursive, option.Delete);
+
+                    if (files.Count == 0)
                     {
-                        Console.WriteLine("Skipped file " + t.Item2 + ".");
-                        Console.WriteLine(cryptoEngine.LastErrorMessage);
+                        Console.WriteLine("No files found in " + option.InputDirToDecrypt + ".");
+                        return 0;
+                    }
+
+                    foreach (var t in files)
+                    {
+                        if (t.Item1 == false)
+                        {
+                            Console.WriteLine("Skipped file " + t.Item2 + ".");
+                            Console.WriteLine(cryptoEngine.LastErrorMessage);
+                        }
                     }
                 }
+                else
+                {
+                    if (!cryptoEngine.DecryptFile(option.InputFileToDecrypt, key, option.Delete))
+                        Console.WriteLine(cryptoEngine.LastErrorMessage);
+                }
             }
-            else
+            catch(Exception ex)
             {
-                if (!cryptoEngine.DecryptFile(option.InputFileToDecrypt, key, option.Delete))
-                    Console.WriteLine(cryptoEngine.LastErrorMessage);
+                Console.WriteLine(ex.Message);
             }
 
             return 0;

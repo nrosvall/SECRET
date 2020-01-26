@@ -132,13 +132,20 @@ namespace SecretEngine
         {
             List<Tuple<bool, string>> fileList = new List<Tuple<bool, string>>();
 
-            IEnumerable<string> files = Directory.EnumerateFiles(dir, "*",
-               recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
-
-            foreach (string file in files)
+            try
             {
-                bool success = EncryptFile(file, key, deletePlain);
-                fileList.Add(Tuple.Create(success, file));
+                IEnumerable<string> files = Directory.EnumerateFiles(dir, "*",
+                   recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+
+                foreach (string file in files)
+                {
+                    bool success = EncryptFile(file, key, deletePlain);
+                    fileList.Add(Tuple.Create(success, file));
+                }
+            }
+            catch(Exception ex)
+            {
+                pLastErrorMessage = ex.Message;
             }
 
             return fileList;
@@ -269,14 +276,21 @@ namespace SecretEngine
         public List<Tuple<bool, string>> DecryptDirectory(string dir, CryptoKey key, bool recursive = false, bool deleteEncrypted = false)
         {
             List<Tuple<bool, string>> fileList = new List<Tuple<bool, string>>();
-         
-            IEnumerable<string> files = Directory.EnumerateFiles(dir, "*" + CRYPTO_FILE_EXT,
-               recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
 
-            foreach (string file in files)
+            try
             {
-                bool success = DecryptFile(file, key, deleteEncrypted);
-                fileList.Add(Tuple.Create(success, file));
+                IEnumerable<string> files = Directory.EnumerateFiles(dir, "*" + CRYPTO_FILE_EXT,
+                   recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+
+                foreach (string file in files)
+                {
+                    bool success = DecryptFile(file, key, deleteEncrypted);
+                    fileList.Add(Tuple.Create(success, file));
+                }
+            }
+            catch(Exception ex)
+            {
+                pLastErrorMessage = ex.Message;
             }
 
             return fileList;

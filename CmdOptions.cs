@@ -1,12 +1,27 @@
 ﻿using System;
+using System.IO;
 using CommandLine;
 
 namespace SECRET
 {
+    internal static class Helper
+    {
+        internal static string EscapeInputPath(string inputPath)
+        {
+            if (inputPath == null)
+                return null;
+
+            string safePath = inputPath.Replace("\"", Path.DirectorySeparatorChar.ToString());
+            safePath = safePath.TrimEnd(Path.DirectorySeparatorChar);
+
+            return safePath;
+        }
+    }
+
     [Verb("encrypt", HelpText = "Encrypt files or directories.")]
     internal class EncryptOption
     {
-        [Option('f', "file", Required = true, HelpText = "File to be encrypted.", SetName="file")]
+        [Option('f', "file", Required = true, HelpText = "File to be encrypted.", SetName = "file")]
         public string InputFileToEncrypt { get; set; }
 
         [Option('d', "directory", Required = true, HelpText = "Directory to be encrypted.", SetName="dir")]
