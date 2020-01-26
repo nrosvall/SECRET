@@ -4,20 +4,6 @@ using CommandLine;
 
 namespace SECRET
 {
-    internal static class Helper
-    {
-        internal static string EscapeInputPath(string inputPath)
-        {
-            if (inputPath == null)
-                return null;
-
-            string safePath = inputPath.Replace("\"", Path.DirectorySeparatorChar.ToString());
-            safePath = safePath.TrimEnd(Path.DirectorySeparatorChar);
-
-            return safePath;
-        }
-    }
-
     [Verb("encrypt", HelpText = "Encrypt files or directories.")]
     internal class EncryptOption
     {
