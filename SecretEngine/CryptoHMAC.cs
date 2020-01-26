@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace SecretEngine
 {
@@ -25,7 +24,7 @@ namespace SecretEngine
                 {
                     byte[] hash = hmac.ComputeHash(stream);
                     stream.Position = offset;
-                    stream.Write(hash);
+                    stream.Write(hash, 0, hash.Length);
                 }
 
                 return true;

@@ -3,7 +3,6 @@ using System.IO;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
-using System.Linq;
 
 namespace SecretEngine
 {
@@ -82,9 +81,9 @@ namespace SecretEngine
 
                 fsOut = new FileStream(file + CRYPTO_FILE_EXT, FileMode.CreateNew);
 
-                fsOut.Write(pMagic);
-                fsOut.Write(iv);
-                fsOut.Write(keySalt);
+                fsOut.Write(pMagic, 0, pMagic.Length);
+                fsOut.Write(iv, 0, iv.Length);
+                fsOut.Write(keySalt, 0, keySalt.Length);
 
                 cryptoStream = new CryptoStream(fsOut, aes.CreateEncryptor(), CryptoStreamMode.Write);
 
