@@ -51,8 +51,6 @@ namespace SecretEngine
                 aes.IV = iv;
                 aes.Mode = CipherMode.CBC;
 
-               
-
                 fsIn = new FileStream(file, FileMode.Open);
 
                 bool isAlreadySecretFile = false;

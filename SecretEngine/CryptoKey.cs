@@ -37,12 +37,12 @@ namespace SecretEngine
             return Tuple.Create(key, salt);
         }
 
-        public Tuple<byte[], byte[]> KeyData
+        internal Tuple<byte[], byte[]> KeyData
         {
             get { return pKeyData; }
         }
 
-        public byte[] GetKeyBytesFromSalt(byte[] salt)
+        internal byte[] GetKeyBytesFromSalt(byte[] salt)
         {
             Rfc2898DeriveBytes k1 = new Rfc2898DeriveBytes(pPasswordBytes, salt, pKeyIterations);
             byte[] key;

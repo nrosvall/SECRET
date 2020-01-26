@@ -2,7 +2,7 @@
   "profiles": {
     "SECRET": {
       "commandName": "Project",
-      "commandLineArgs": " encrypt -r -d \"C:\\Users\\nrosv\\Documents\\Visual Studio 2019\\Projects\\SECRET\\TestData\\\" --delete"
+      "commandLineArgs": " encrypt -r -d \"C:\\Users\\nrosv\\Documents\\Visual Studio 2019\\Projects\\SECRET\\TestData\" --delete"
     }
   }
 }

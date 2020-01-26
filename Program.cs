@@ -20,7 +20,6 @@ namespace SECRET
         {
             try
             {
-
                 Crypto cryptoEngine = new Crypto();
                 CryptoKey key;
                 bool isDir = false;
