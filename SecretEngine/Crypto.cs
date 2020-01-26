@@ -51,6 +51,37 @@ namespace SecretEngine
                 aes.IV = iv;
                 aes.Mode = CipherMode.CBC;
 
+               
+
+                fsIn = new FileStream(file, FileMode.Open);
+
+                bool isAlreadySecretFile = false;
+                byte[] magic = new byte[pMagic.Length];
+                fsIn.Read(magic, 0, pMagic.Length);
+
+                if (magic.Length == pMagic.Length)
+                {
+                    for (int i = 0; i < magic.Length; i++)
+                    {
+                        if (magic[i] != pMagic[i])
+                        {
+                            //We can break and continue with the encryption as the file is not encrypted with Secret
+                            //or at least does not have the same magic
+                            isAlreadySecretFile = false;
+                            break;
+                        }
+                        else
+                        {
+                            isAlreadySecretFile = true;
+                        }
+                    }
+                }
+
+                if(isAlreadySecretFile)
+                    throw new Exception("File " + file + " already encrypted with Secret. Skipping.");
+
+                fsIn.Position = 0;
+
                 fsOut = new FileStream(file + CRYPTO_FILE_EXT, FileMode.CreateNew);
 
                 fsOut.Write(pMagic);
@@ -59,7 +90,6 @@ namespace SecretEngine
 
                 cryptoStream = new CryptoStream(fsOut, aes.CreateEncryptor(), CryptoStreamMode.Write);
 
-                fsIn = new FileStream(file, FileMode.Open);
 
                 byte[] buffer = new byte[4096];
                 int read;
@@ -240,7 +270,7 @@ namespace SecretEngine
         {
             List<Tuple<bool, string>> fileList = new List<Tuple<bool, string>>();
          
-            IEnumerable<string> files = Directory.EnumerateFiles(dir, "*",
+            IEnumerable<string> files = Directory.EnumerateFiles(dir, "*" + CRYPTO_FILE_EXT,
                recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
 
             foreach (string file in files)

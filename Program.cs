@@ -36,6 +36,12 @@ namespace SECRET
                 List<Tuple<bool, string>> files;
                 files = cryptoEngine.EncryptDirectory(option.InputDirToEncrypt, key, option.Recursive, option.Delete);
 
+                if (files.Count == 0)
+                {
+                    Console.WriteLine("No files found in " + option.InputDirToEncrypt + ".");
+                    return 0;
+                }
+
                 foreach (var t in files)
                 {
                     if (t.Item1 == false)
@@ -73,6 +79,12 @@ namespace SECRET
                 List<Tuple<bool, string>> files;
                 files = cryptoEngine.DecryptDirectory(option.InputDirToDecrypt, key, option.Recursive, option.Delete);
                  
+                if(files.Count == 0)
+                {
+                    Console.WriteLine("No files found in " + option.InputDirToDecrypt + ".");
+                    return 0;
+                }
+
                 foreach(var t in files)
                 {
                     if(t.Item1 == false)
