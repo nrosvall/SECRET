@@ -8,6 +8,8 @@ namespace SECRET
 {
     class Program
     {
+        private static License pLicense = new License("68971edb60ee6f85c600bf8945b5130bdfabfa42");
+
         static void Main(string[] args)
         {
             Parser.Default.ParseArguments<EncryptOption, DecryptOption>(args).MapResult(
@@ -20,7 +22,7 @@ namespace SECRET
         {
             try
             {
-                Crypto cryptoEngine = new Crypto();
+                Crypto cryptoEngine = new Crypto(pLicense);
                 CryptoKey key;
                 bool isDir = false;
                 string pass = GetPassword();
@@ -71,7 +73,7 @@ namespace SECRET
         {
             try
             {
-                Crypto cryptoEngine = new Crypto();
+                Crypto cryptoEngine = new Crypto(pLicense);
                 CryptoKey key;
                 bool isDir = false;
                 string pass = GetPassword();
