@@ -5,12 +5,30 @@ namespace SecretEngine
 {
     public class License
     {
+        public enum LicenseType
+        {
+            TRIAL,
+            FULL
+        }
+
         private bool pIsValid;
 
-        public License(string code)
+        public License(LicenseType type, string code)
         {
             pIsValid = false;
-            Validate(code);
+
+            if (type == LicenseType.TRIAL)
+            {
+                ValidateTrial();
+            }
+            else if (type == LicenseType.FULL)
+            {
+                Validate(code);
+            }
+            else
+            {
+                throw new Exception("Invalid license type.");
+            }
         }
 
         internal bool IsValid
@@ -20,10 +38,23 @@ namespace SecretEngine
 
         private void Validate(string code)
         {
-            if (code.Length != 40)
+            if (code == null)
+            {
                 pIsValid = false;
+                return;
+            }
+            if (code.Length != 40)
+            {
+                pIsValid = false;
+                return;
+            }
 
             pIsValid = (new Regex("^[a-fA-F0-9]+$").IsMatch(code));
+        }
+
+        private void ValidateTrial()
+        {
+
         }
     }
 }
