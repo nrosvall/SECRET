@@ -85,8 +85,8 @@ namespace SecretEngine
                 double total = (currentDatetimeValue - datetimeValue).TotalDays;
                 if (total > 30)
                     retval = false;
-
-                retval = true;
+                else
+                    retval = true;
             }
             catch
             {               

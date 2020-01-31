@@ -8,7 +8,7 @@ namespace SECRET
 {
     class Program
     {
-        private static readonly License pLicense = new License(License.LicenseType.FULL, "68971edb60ee6f85c600bf8945b5130bdfabfa42");
+        private static readonly License pLicense = new License(License.LicenseType.TRIAL, "68971edb60ee6f85c600bf8945b5130bdfabfa42");
 
         static void Main(string[] args)
         {
