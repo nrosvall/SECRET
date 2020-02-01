@@ -8,7 +8,7 @@ namespace SECRET
 {
     class Program
     {
-        private static readonly License pLicense = new License(License.LicenseType.TRIAL, "68971edb60ee6f85c600bf8945b5130bdfabfa42");
+        private static readonly License pLicense = new License(License.LicenseType.FULL, "68971edb60ee6f85c600bf8945b5130bdfabfa42");
 
         static void Main(string[] args)
         {
@@ -123,32 +123,39 @@ namespace SECRET
         private static string GetPassword()
         {
             string pass = "";
-            Console.Write("Password: ");
 
-            do
+            pass = Environment.GetEnvironmentVariable("SECRET_MASTER_KEY");
+
+            if (pass == null)
             {
-                ConsoleKeyInfo oneKey = Console.ReadKey(true);
+                Console.Write("Password: ");
 
-                // Disable Backspace
-                if (oneKey.Key != ConsoleKey.Backspace && oneKey.Key != ConsoleKey.Enter)
+                do
                 {
-                    pass += oneKey.KeyChar;
-                    Console.Write("*");
-                }
-                else
-                {
-                    if (oneKey.Key == ConsoleKey.Backspace && pass.Length > 0)
-                    {
-                        pass = pass.Substring(0, (pass.Length - 1));
-                        Console.Write("\b \b");
-                    }
-                    else if (oneKey.Key == ConsoleKey.Enter)
-                    {
-                        break;
-                    }
-                }
+                    ConsoleKeyInfo oneKey = Console.ReadKey(true);
 
-            } while (true);
+                    // Disable Backspace
+                    if (oneKey.Key != ConsoleKey.Backspace && oneKey.Key != ConsoleKey.Enter)
+                    {
+                        pass += oneKey.KeyChar;
+                        Console.Write("*");
+                    }
+                    else
+                    {
+                        if (oneKey.Key == ConsoleKey.Backspace && pass.Length > 0)
+                        {
+                            pass = pass.Substring(0, (pass.Length - 1));
+                            Console.Write("\b \b");
+                        }
+                        else if (oneKey.Key == ConsoleKey.Enter)
+                        {
+                            break;
+                        }
+                    }
+
+                } while (true);
+
+            }
 
             //No spaces allowed
             return pass.Trim();
