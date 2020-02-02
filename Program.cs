@@ -27,6 +27,12 @@ namespace SECRET
                 bool isDir = false;
                 string pass = GetPassword();
 
+                if(pass == null)
+                {
+                    Console.WriteLine("Empty passwords not allowed.");
+                    return 0;
+                }
+
                 Console.WriteLine();
                 Console.WriteLine("Encrypting....");
 
@@ -78,6 +84,12 @@ namespace SECRET
                 bool isDir = false;
                 string pass = GetPassword();
 
+                if (pass == null)
+                {
+                    Console.WriteLine("Empty passwords not allowed.");
+                    return 0;
+                }
+
                 Console.WriteLine();
                 Console.WriteLine("Decrypting....");
 
@@ -122,7 +134,7 @@ namespace SECRET
 
         private static string GetPassword()
         {
-            string pass = "";
+            string pass;
 
             pass = Environment.GetEnvironmentVariable("SECRET_MASTER_KEY");
 
@@ -155,6 +167,11 @@ namespace SECRET
 
                 } while (true);
 
+            }
+
+            if(pass == null)
+            {
+                return null;
             }
 
             //No spaces allowed
