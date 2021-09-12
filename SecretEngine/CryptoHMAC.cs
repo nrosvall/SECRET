@@ -1,4 +1,6 @@
-﻿using System;
+﻿//Copyright 2021 Niko Rosvall <niko@byteptr.com>
+
+using System;
 using System.IO;
 using System.Security.Cryptography;
 

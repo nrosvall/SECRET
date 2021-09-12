@@ -1,3 +1,5 @@
+//Copyright 2021 Niko Rosvall <niko@byteptr.com>
+
 using System;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
 using System.IO;
 using System.Collections.Generic;
@@ -15,16 +17,8 @@ namespace SecretEngine
         private readonly byte[] pMagic;
         private string pLastErrorMessage;
 
-        public Crypto(License license)
+        public Crypto()
         {
-            if(license == null)
-                throw new Exception("License missing.");
-
-            if (!license.IsValid)
-            {
-                throw new Exception("Invalid license.");
-            }
-
             pDataByteGenerator = new RandomDataBytes();
             pMagic = BitConverter.GetBytes(0x736563726574);
 

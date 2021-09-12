@@ -1,4 +1,6 @@
-﻿using System;
+﻿//Copyright 2021 Niko Rosvall <niko@byteptr.com>
+
+using System;
 using System.IO;
 using System.Collections.Generic;
 using CommandLine;
@@ -8,8 +10,6 @@ namespace SECRET
 {
     class Program
     {
-        private static readonly License pLicense = new License(License.LicenseType.FULL, "68971edb60ee6f85c600bf8945b5130bdfabfa42");
-
         static void Main(string[] args)
         {
             Parser.Default.ParseArguments<EncryptOption, DecryptOption>(args).MapResult(
@@ -22,7 +22,7 @@ namespace SECRET
         {
             try
             {
-                Crypto cryptoEngine = new Crypto(pLicense);
+                Crypto cryptoEngine = new Crypto();
                 CryptoKey key;
                 bool isDir = false;
                 string pass = GetPassword();
@@ -79,7 +79,7 @@ namespace SECRET
         {
             try
             {
-                Crypto cryptoEngine = new Crypto(pLicense);
+                Crypto cryptoEngine = new Crypto();
                 CryptoKey key;
                 bool isDir = false;
                 string pass = GetPassword();
