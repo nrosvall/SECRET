@@ -1,4 +1,4 @@
-﻿//Copyright 2021 Niko Rosvall <niko@byteptr.com>
+﻿//Copyright 2022 Niko Rosvall <niko@byteptr.com>
 
 using System;
 using System.IO;
