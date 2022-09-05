@@ -1,4 +1,4 @@
-#SECRET/SecretEngine
+#SECRET and SecretEngine
 
 ##About SECRET
 
