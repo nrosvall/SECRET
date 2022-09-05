@@ -1,6 +1,6 @@
-#SECRET and SecretEngine
+# SECRET and SecretEngine
 
-##About SECRET
+## About SECRET
 
 SECRET is a command line encryption tool for Windows. 
 It comes as a standalone binary file which does not need installation. 
@@ -11,7 +11,7 @@ Note that you will need .NET 6 installed for SECRET to work.
 SECRET is very easy to use and can handle encryption of very large files. 
 It supports all file types. SECRET also allows you to encrypt directories with ease, even recursively. 
 
-##SecretEngine
+## SecretEngine
 
 SecretEngine is reliable, yet easy to use, file encryption library for .NET. 
 It takes care of the nasty details so you don't have to.
@@ -19,7 +19,7 @@ It takes care of the nasty details so you don't have to.
 SecretEngine supports both 32 bit and 64 bit. 
 It's compiled for .NET Standard 2.1 which means is compatible for .NET 5 or later.
 
-##Technical details
+## Technical details
 
 Under the hood SecretEngine uses Advanced Encryption Standard (AES) in CBC mode with 256bit keys. 
 128 bit cryptographically random initialization vector (IV) is used.
