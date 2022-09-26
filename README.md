@@ -2,7 +2,7 @@
 
 ## About SECRET
 
-SECRET is a command line encryption tool for Windows. 
+SECRET is a command line encryption tool for Windows and Linux. 
 It comes as a standalone binary file which does not need installation. 
 Copy the file to some path and run it from there. 
 
